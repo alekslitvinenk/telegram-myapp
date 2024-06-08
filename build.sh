@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-rm -R dist
+rm -R build
 
 ./bump.sh "$@"
 

@@ -13,8 +13,10 @@
         event.preventDefault()
 
         quickAddUser(newUser).then(response => {
-            if (response.status === 500) {
+            if (response.status !== 200) {
                 hasRegistrationError = true
+                telegramID = ""
+                password = ""
             } else {
                 console.log("Add user response: ", response)
             }

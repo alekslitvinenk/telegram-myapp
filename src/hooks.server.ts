@@ -1,4 +1,5 @@
 import mariadb from "mariadb";
+import type {UserData, UserSession} from "$lib/types";
 
 // @ts-ignore
 /*globalThis.databaseConnectionPool ??= mariadb.createPool({
@@ -17,3 +18,6 @@ globalThis.databaseConnectionPool ??= mariadb.createPool({
     database: "telegram",
     connectionLimit: 5,
 });
+
+// @ts-ignore
+globalThis.sessionStorage ??= new Map<string, UserSession>()

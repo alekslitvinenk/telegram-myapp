@@ -28,7 +28,7 @@
 
 {#if state === "unreristered"}
     <div>
-        <AuthForm actionHandler={handleSubmit} hasAuthError={hasError} />
+        <AuthForm actionHandler={handleSubmit} hasAuthError={hasError} submitName="SignUp"/>
     </div>
 {:else if state === "pending"}
     <div>

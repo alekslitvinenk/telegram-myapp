@@ -1,5 +1,4 @@
 <script lang="ts">
-
     import type {LoginData} from "$lib/types";
 
     let telegramID: string = ""
@@ -14,6 +13,7 @@
 
     export let actionHandler: (x:LoginData) => void;
     export let hasAuthError: boolean;
+    export let submitName: string;
 </script>
 
 <div id="signupquick" class="quicksignup">
@@ -41,7 +41,7 @@
                     placeholder="password"
                     bind:value={password} />
         </label>
-        <input type="submit" value="Submit"/>
+        <input type="submit" value={submitName}/>
     </form>
 </div>
 

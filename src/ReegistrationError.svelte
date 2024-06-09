@@ -1,0 +1,3 @@
+<div>
+    Registration error
+</div>

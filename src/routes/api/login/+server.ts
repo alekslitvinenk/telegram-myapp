@@ -2,7 +2,7 @@ import {Users} from "$lib/server/users";
 import type {Pool} from "mariadb";
 import {error, json} from "@sveltejs/kit";
 import type {LoginData, UserDataOpt, UserSession} from "$lib/types";
-import {findSessionByTg, newUserSession} from "$lib/utils";
+import {findSessionByTg, newUserSession, redactUserData} from "$lib/utils";
 
 export async function POST({ request, cookies }) {
     // @ts-ignore
@@ -23,7 +23,7 @@ export async function POST({ request, cookies }) {
             const userSession = newUserSession(res)
             sessionStorage.set(res.telegramID, userSession)
             cookies.set("sessionID", userSession.sessionId, {path: "/"})
-            return json(res)
+            return json(redactUserData(res))
         }
     } else {
         return error(500)

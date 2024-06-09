@@ -10,7 +10,7 @@ export async function POST({ request, cookies }) {
 
     console.log("Logging out...")
     if (!hasSession) {
-        console.log("Logging out...... no cookie")
+        console.log("Logging out... no cookie")
         return error(500)
     } else {
         cookies.delete('sessionID', {path: "/"})

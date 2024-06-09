@@ -1,60 +1,49 @@
 <script lang="ts">
-    import type {LoginData} from "$lib/types";
-    import {onMount} from "svelte";
+    import {doLogout, validateToken} from "$lib/apiclient";
+    import {goto} from "$app/navigation";
+    import type {UserData} from "$lib/types";
 
-    let telegramID: string = ""
-    let password: string = ""
+    let token: string = ""
 
-    $: newUser = {telegramID: telegramID, password: password};
+    $: myToken = {token: token}
 
     const handleAction = (event: Event) => {
         event.preventDefault()
-        actionHandler(newUser)
+
+        validateToken(myToken).then(res => {
+            if (res.ok) {
+                res.json().then((fullProfile: UserData) => {
+                    validateCallBack(fullProfile);
+                })
+            } else {
+                doLogout().then(() => goto("/sign-in"))
+            }
+        })
     }
 
-    onMount(() => {
-        telegramID = telegramData ? telegramData : ""
-    });
-
-    export let actionHandler: (x:LoginData) => void;
-    export let hasAuthError: boolean;
-    export let submitName: string;
-    export let telegramData: string | null;
+    export let validateCallBack: Function
 </script>
 
 <div id="signupquick" class="quicksignup">
-    <h3>{submitName}</h3>
-    {#if hasAuthError === true }
-        <div class="authError">
-            Something went wrong!
-        </div>
-    {/if}
+    <h3>Enter your token</h3>
     <form on:submit={handleAction}>
         <label>
             Telegram ID:
             <input
-                    name="telegramID"
+                    name="token"
                     type="text"
-                    placeholder="Your telegram ID"
-                    bind:value={telegramID} />
+                    placeholder="Your token"
+                    bind:value={token} />
         </label>
         <br />
-        <label>
-            Password:
-            <input
-                    name="userPassword"
-                    type="password"
-                    placeholder="password"
-                    bind:value={password} />
-        </label>
-        <input type="submit" value={submitName}/>
+        <input type="submit" value="Submit"/>
     </form>
 </div>
 
 <style>
     .quicksignup {
-        width: 230px;
-        min-height: 300px;
+        width: 440px;
+        height: fit-content;
         margin: 2rem auto;
         background-color: white;
         border: 1px solid;
@@ -94,14 +83,6 @@
     .quicksignup h3 {
         margin-top: 20px;
         margin-bottom: 20px;
-        text-align: center;
-    }
-
-    .authError {
-        border: 2px solid red;
-        background: red;
-        color: white;
-        font-size: 0.75rem;
         text-align: center;
     }
 </style>

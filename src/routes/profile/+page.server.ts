@@ -1,5 +1,5 @@
 import {redirect} from "@sveltejs/kit";
-import {findSessionBySessionId} from "$lib/utils";
+import {findSessionBySessionId, redactUserData} from "$lib/utils";
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ cookies }) {
@@ -15,7 +15,7 @@ export async function load({ cookies }) {
         if (res) {
             console.log("Loading /profile... user found")
             return {
-                data: res.user
+                data: redactUserData(res.user)
             }
         } else {
             console.log("Loading /profile... user not found")

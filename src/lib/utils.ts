@@ -27,3 +27,13 @@ export function findSessionBySessionId(sessionID: string): UserSessionOpt {
 
     return Array.from(sessionStorage.values()).find(session => session.sessionId === sessionID)
 }
+
+export function redactUserData(userData: UserData, hideToken: boolean = true): UserData {
+    const newUserData: UserData = {...userData}
+    newUserData.password = "******"
+    if (hideToken) {
+        newUserData.token = "******"
+    }
+
+    return newUserData
+}

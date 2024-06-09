@@ -2,6 +2,7 @@ import {Users} from "$lib/server/users";
 import type {Pool} from "mariadb";
 import {error, json} from "@sveltejs/kit";
 import type {LoginData, UserDataOpt} from "$lib/types";
+import {redactUserData} from "$lib/utils";
 
 export async function POST({ request }) {
     // @ts-ignore
@@ -12,7 +13,7 @@ export async function POST({ request }) {
     const res: UserDataOpt = await users.registerUser(newUser.telegramID, newUser.password)
 
     if (res) {
-        return json(res)
+        return json(redactUserData(res, false))
     } else {
         return error(500)
     }

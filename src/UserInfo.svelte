@@ -6,7 +6,7 @@
 
 <div class="box">
     <p><strong>telegramID</strong>: {userData.telegramID}</p>
-    <p><strong>password</strong>: ******</p>
+    <p><strong>password</strong>: {userData.password}</p>
     <p><strong>token</strong>: {userData.token}</p>
     <p><strong>createdAt</strong>: {userData.createdAt}</p>
 </div>

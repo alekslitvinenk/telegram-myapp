@@ -3,11 +3,14 @@
     import {doLogout} from "$lib/apiclient.js";
     import {goto} from "$app/navigation";
     import UserInfo from "../../UserInfo.svelte";
+    import ActionBtn from "../../ActionBtn.svelte";
+    import TokenForm from "../../TokenForm.svelte";
 
     /** @type {import('./$types').PageData} */
     export let data: any;
 
     let userData: UserData;
+    let fullUserData: UserData;
 
     if (data["data"] === null) {
         console.log("No user data found");
@@ -18,14 +21,20 @@
     const handleLogOut = (): void => {
         doLogout().then(() => goto("/sign-in"))
     }
+
+    const validateCallBack = (x: UserData) => {
+        fullUserData = x
+    }
 </script>
 
 {#if userData}
-<div>
-    <UserInfo userData={userData}/>
-    <div class="logout">
-        <div on:click={handleLogOut}>Log out</div>
-    </div>
+<div class="box">
+    {#if fullUserData}
+        <UserInfo userData={fullUserData}/>
+    {:else}
+        <TokenForm validateCallBack={validateCallBack}/>
+    {/if}
+    <ActionBtn actionName="LogOut" actionHandler={handleLogOut} />
 </div>
 {:else}
     <p>No userData</p>
@@ -34,18 +43,7 @@
 <style>
     @import url("https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css");
 
-    .logout {
-        display: block;
-        margin: 20px auto;
-        background-color: #007bff;
-        height: 35px;
-        width: 100px;
-        border-radius: 4px;
-        border-style: none;
-        color: white;
-        cursor: pointer;
-        transition: background-color 0.2s;
-        font-size: 1.2rem;
+    .box {
         text-align: center;
     }
 </style>

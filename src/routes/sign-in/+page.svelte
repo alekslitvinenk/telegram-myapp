@@ -3,11 +3,16 @@
     import {doLogin} from "$lib/apiclient";
     import type {LoginData, UserData} from "$lib/types";
     import {goto} from "$app/navigation";
+    import {page} from "$app/stores";
 
     let token: string;
     let hasError: boolean;
 
+    const url = $page.url;
+    const telegramID  = url.searchParams.get('telegramID')
+
     const handleSubmit = (newUser: LoginData) => {
+        hasError = false
         state = "pending"
 
         doLogin(newUser).then(response => {
@@ -29,7 +34,7 @@
 
 {#if state === "unauthed" || "error"}
     <div>
-        <AuthForm actionHandler={handleSubmit} hasAuthError={hasError} submitName="SignIn"/>
+        <AuthForm telegramData={telegramID} actionHandler={handleSubmit} hasAuthError={hasError} submitName="SignIn"/>
     </div>
 {:else}
     <div>

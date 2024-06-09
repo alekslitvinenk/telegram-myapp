@@ -13,6 +13,10 @@ export interface UserSession {
     sessionId: string;
 }
 
+export interface MyToken {
+    token: string
+}
+
 export type UserDataOpt = UserData | null
 
 export type UserSessionOpt = UserSession | undefined

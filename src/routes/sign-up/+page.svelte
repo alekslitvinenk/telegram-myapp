@@ -3,11 +3,16 @@
     import {quickAddUser} from "$lib/apiclient";
     import type {LoginData, UserData} from "$lib/types";
     import TokenBox from "../../TokenBox.svelte";
+    import {page} from "$app/stores";
 
     let token: string;
     let hasError: boolean;
 
+    const url = $page.url;
+    const telegramID  = url.searchParams.get('telegramID')
+
     const handleSubmit = (newUser: LoginData) => {
+        hasError = false
         state = "pending"
 
         quickAddUser(newUser).then(response => {
@@ -23,12 +28,12 @@
         })
     }
 
-    let state: "unreristered" | "pending" | "registered" | "error" = "unreristered";
+    let state: "unreristered" | "pending" | "registered" = "unreristered";
 </script>
 
-{#if state === "unreristered" || "error"}
+{#if state === "unreristered"}
     <div>
-        <AuthForm actionHandler={handleSubmit} hasAuthError={hasError} submitName="SignUp"/>
+        <AuthForm telegramData={telegramID} actionHandler={handleSubmit} hasAuthError={hasError} submitName="SignUp"/>
     </div>
 {:else if state === "pending"}
     <div>

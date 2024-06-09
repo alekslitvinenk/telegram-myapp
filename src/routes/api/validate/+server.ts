@@ -1,4 +1,4 @@
-import {error, json, redirect} from "@sveltejs/kit";
+import {error, json} from "@sveltejs/kit";
 import {findSessionBySessionId, redactUserData} from "$lib/utils";
 import type {MyToken} from "$lib/types";
 
@@ -17,7 +17,7 @@ export async function POST({ request, cookies }) {
         if (res) {
             console.log("Validating token... my " + myToken.token + " " + res.user.token)
             if (res.user.token === myToken.token) {
-                return json(res.user)
+                return json(redactUserData(res.user, false))
             } else {
                 console.log("Validating token... no match")
                 cookies.delete('sessionID', {path: "/"})

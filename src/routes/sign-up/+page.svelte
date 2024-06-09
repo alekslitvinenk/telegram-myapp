@@ -11,7 +11,7 @@
     let hasError: boolean;
 
     const url = $page.url;
-    const telegramID  = url.searchParams.get('telegramID')
+    const telegramID  = url.searchParams.get('id')
 
     const handleSubmit = (newUser: LoginData) => {
         hasError = false
@@ -44,7 +44,7 @@
 {:else}
     <div>
         <TokenBox token={token}/>
-        <div class="btns"><ActionBtn actionName="SignIn" actionHandler={() => {goto(`/sign-in?telegramID=${telegramID}`)}} /></div>
+        <div class="btns"><ActionBtn actionName="SignIn" actionHandler={() => {goto(`/sign-in?id=${telegramID}`)}} /></div>
     </div>
 {/if}
 

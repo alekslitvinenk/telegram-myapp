@@ -9,7 +9,7 @@
     let hasError: boolean;
 
     const url = $page.url;
-    const telegramID  = url.searchParams.get('telegramID')
+    const telegramID  = url.searchParams.get('id')
 
     const handleSubmit = (newUser: LoginData) => {
         hasError = false

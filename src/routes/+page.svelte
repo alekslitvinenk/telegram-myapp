@@ -8,15 +8,15 @@
     const firstName  = url.searchParams.get('name')
 
     const jumpToLogin = () => {
-        const telegramID =  url.searchParams.get('telegramID')
+        const telegramID =  url.searchParams.get('id')
 
-        goto(`/sign-in?telegramID=${telegramID}`)
+        goto(`/sign-in?id=${telegramID}`)
     }
 
     const jumpToRegistration = () => {
-        const telegramID =  url.searchParams.get('telegramID')
+        const telegramID =  url.searchParams.get('id')
 
-        goto(`/sign-up?telegramID=${telegramID}`)
+        goto(`/sign-up?id=${telegramID}`)
     }
 </script>
 

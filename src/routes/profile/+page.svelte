@@ -8,7 +8,6 @@
 
     if (data["data"] === null) {
         console.log("No user data found");
-        //goto('/sign-in')
     } else {
         userData = data["data"]
     }

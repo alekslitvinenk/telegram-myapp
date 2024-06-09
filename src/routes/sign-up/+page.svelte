@@ -4,6 +4,8 @@
     import type {LoginData, UserData} from "$lib/types";
     import TokenBox from "../../TokenBox.svelte";
     import {page} from "$app/stores";
+    import ActionBtn from "../../ActionBtn.svelte";
+    import {goto} from "$app/navigation";
 
     let token: string;
     let hasError: boolean;
@@ -40,9 +42,16 @@
         <p>Registering user...</p>
     </div>
 {:else}
-    <TokenBox token={token}/>
+    <div>
+        <TokenBox token={token}/>
+        <div class="btns"><ActionBtn actionName="SignIn" actionHandler={() => {goto(`/sign-in?telegramID=${telegramID}`)}} /></div>
+    </div>
 {/if}
 
 <style>
     @import url("https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css");
+
+    .btns {
+        text-align: center;
+    }
 </style>

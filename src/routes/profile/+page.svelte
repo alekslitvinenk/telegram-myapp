@@ -2,6 +2,7 @@
     import type {UserData} from "$lib/types";
     import {doLogout} from "$lib/apiclient.js";
     import {goto} from "$app/navigation";
+    import UserInfo from "../../UserInfo.svelte";
 
     /** @type {import('./$types').PageData} */
     export let data: any;
@@ -15,18 +16,13 @@
     }
 
     const handleLogOut = (): void => {
-        doLogout().then(res_ => goto("/sign-in"))
+        doLogout().then(() => goto("/sign-in"))
     }
 </script>
 
 {#if userData}
 <div>
-    <div>
-        <p>telegramID: {userData.telegramID}</p>
-        <p>password: ******</p>
-        <p>token: {userData.token}</p>
-        <p>createdAt: {userData.createdAt}</p>
-    </div>
+    <UserInfo userData={userData}/>
     <div class="logout">
         <div on:click={handleLogOut}>Log out</div>
     </div>
@@ -50,5 +46,6 @@
         cursor: pointer;
         transition: background-color 0.2s;
         font-size: 1.2rem;
+        text-align: center;
     }
 </style>

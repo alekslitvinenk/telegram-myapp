@@ -16,7 +16,7 @@ export async function POST({ request, cookies }) {
         cookies.delete('sessionID', {path: "/"})
         const res = findSessionBySessionId(sessionID)
         if (res) {
-            sessionStorage.delete(res.sessionId)
+            sessionStorage.delete(res.user.telegramID)
             return json("Ok")
         } else {
             console.log("Logging out... no session")

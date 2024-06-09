@@ -17,7 +17,7 @@
 </script>
 
 <div id="signupquick" class="quicksignup">
-    <h3>Sign Up</h3>
+    <h3>{submitName}</h3>
     {#if hasAuthError === true }
         <div class="authError">
             Something went wrong!

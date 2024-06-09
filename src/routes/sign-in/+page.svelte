@@ -24,16 +24,16 @@
         })
     }
 
-    let state: "unauthed" | "pending" = "unauthed";
+    let state: "unauthed" | "pending" | "error" = "unauthed";
 </script>
 
-{#if state === "unauthed"}
+{#if state === "unauthed" || "error"}
     <div>
         <AuthForm actionHandler={handleSubmit} hasAuthError={hasError} submitName="SignIn"/>
     </div>
 {:else}
     <div>
-        <p>Registering user</p>
+        <p>Logging in...</p>
     </div>
 {/if}
 

@@ -23,17 +23,21 @@
         })
     }
 
-    let state: "unreristered" | "pending" | "registered" = "unreristered";
+    let state: "unreristered" | "pending" | "registered" | "error" = "unreristered";
 </script>
 
-{#if state === "unreristered"}
+{#if state === "unreristered" || "error"}
     <div>
         <AuthForm actionHandler={handleSubmit} hasAuthError={hasError} submitName="SignUp"/>
     </div>
 {:else if state === "pending"}
     <div>
-        <p>Registering user</p>
+        <p>Registering user...</p>
     </div>
 {:else}
     <TokenBox token={token}/>
 {/if}
+
+<style>
+    @import url("https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css");
+</style>

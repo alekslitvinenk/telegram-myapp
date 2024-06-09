@@ -14,3 +14,5 @@ export interface UserSession {
 }
 
 export type UserDataOpt = UserData | null
+
+export type UserSessionOpt = UserSession | undefined

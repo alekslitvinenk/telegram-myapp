@@ -1,4 +1,5 @@
-import {error, json, redirect} from "@sveltejs/kit";
+import {error, json} from "@sveltejs/kit";
+import {findSessionBySessionId} from "$lib/utils";
 
 export async function POST({ request, cookies }) {
     const sessionID = cookies.get('sessionID');
@@ -10,16 +11,16 @@ export async function POST({ request, cookies }) {
     console.log("Logging out...")
     if (!hasSession) {
         console.log("Logging out...... no cookie")
+        return error(500)
     } else {
         cookies.delete('sessionID', {path: "/"})
-        const res = Array.from(sessionStorage.values()).filter(session => session.sessionId === sessionID)
-        if (res.length == 0) {
-            console.log("Logging out...... no session")
+        const res = findSessionBySessionId(sessionID)
+        if (res) {
+            sessionStorage.delete(res.sessionId)
+            return json("Ok")
         } else {
-            const session = res[0]
-            sessionStorage.delete(session.sessionId)
+            console.log("Logging out... no session")
+            return error(500)
         }
     }
-
-    throw redirect(302, "/sign-in")
 }

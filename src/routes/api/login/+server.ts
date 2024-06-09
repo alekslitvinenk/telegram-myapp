@@ -2,7 +2,7 @@ import {Users} from "$lib/server/users";
 import type {Pool} from "mariadb";
 import {error, json} from "@sveltejs/kit";
 import type {LoginData, UserDataOpt, UserSession} from "$lib/types";
-import {newUserSession} from "$lib/utils";
+import {findSessionByTg, newUserSession} from "$lib/utils";
 
 export async function POST({ request, cookies }) {
     // @ts-ignore
@@ -16,8 +16,9 @@ export async function POST({ request, cookies }) {
     const sessionStorage: Map<string, UserSession> = globalThis.sessionStorage
 
     if (res) {
-        if (sessionStorage.has(res.telegramID)) {
-            return json(null)
+        const userSession = findSessionByTg(res.telegramID)
+        if (userSession) {
+            return error(500)
         } else {
             const userSession = newUserSession(res)
             sessionStorage.set(res.telegramID, userSession)
